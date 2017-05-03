@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.pedrogomez.renderers.RVRendererAdapter;
+import com.pedrogomez.renderers.RendererBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(animationTimer = PublishSubject.create());
 
-        CustomRendererBuilder rendererBuilder = new CustomRendererBuilder(animationTimer);
+        RendererBuilder<Item> rendererBuilder = new RendererBuilder<>(new CustomRenderer(animationTimer));
         RVRendererAdapter adapter = new RVRendererAdapter<>(rendererBuilder);
+        myList.setAdapter(adapter);
 
         List<Item> items = new ArrayList<>();
 
@@ -57,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         items.add(new Item("Tenerife", 17, 10));
 
         adapter.addAll(items);
-
-        myList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override public void onDestroy() {

@@ -40,8 +40,8 @@ class CustomRenderer extends Renderer<Item> {
 
     @Override public void render() {
         city.setText(getContent().city);
-        hours.setText(getContent().hours);
-        minutes.setText(getContent().minutes);
+        hours.setText(String.valueOf(getContent().hours));
+        minutes.setText(String.valueOf(getContent().minutes));
 
         setupAnimation();
         animationTimer.subscribe(timerValue -> startAnimation());
